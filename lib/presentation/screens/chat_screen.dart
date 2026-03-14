@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/presentation/widgets/her_message_bubble.dart';
+import 'package:yes_no_app/presentation/widgets/message_field_box.dart';
+import 'package:yes_no_app/presentation/widgets/my_message_bubble.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -23,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text('Mi amor ❤️'),
         centerTitle: false,
       ),
-      body: const Center(child: Text('Welcome to the Chat Screen!')),
+      body: _ChatView(),
     );
   }
 }
@@ -36,7 +39,24 @@ class _ChatView extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: ScrollController(),
+                itemCount: 100,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: index % 2 == 0
+                        ? HerMessageBubble(message: index.toString())
+                        : MyMessageBubble(message: index.toString()),
+                  );
+                },
+              ),
+            ),
+            MessageFieldBox(onValue: (value) {}),
+          ],
+        ),
       ),
     );
   }
